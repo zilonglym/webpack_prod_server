@@ -25,7 +25,16 @@
 //              }});
 //          }
 
-          console.log('this.$route.title: ', this.$route.meta.title);
+          //console.log('this.$route.title: ', this.$route.meta.title);
+
+          var noPush = true;
+          window.addEventListener("popstate", function(e) {
+              console.log('回退触发');
+              if (noPush) {
+                  history.back(-2);
+                  noPush = false;
+              };
+          }, false);
       },
       mounted(){
 

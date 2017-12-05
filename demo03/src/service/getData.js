@@ -6,14 +6,26 @@ import {
 import axios from 'axios'
 import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
+import {isweixin, setStore} from '../config/mUtils';
 import Vue from 'vue'
 
 const myFetch = (url = '', params = {},type = 'GET') => {
   var sessionId = localStorage.KKWEBAPP_sessionId;
+
+  var redirectUri="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0ffba5eb14604a45&" +
+    "redirect_uri=" +window.location.protocol+"//"+window.location.host+loginUrl+"&"+
+    "response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
+
   if(!sessionId){
+    setStore('PRE_URL', window.location.href);
+    if(isweixin()){
+      window.location.href = redirectUri;
+      return;
+    }else{
       window.history.replaceState(null, '登录', loginUrl);
       history.go(0);
       return;
+    };
   }
   Indicator.open({
     spinnerType: 'fading-circle'
@@ -30,14 +42,19 @@ const myFetch = (url = '', params = {},type = 'GET') => {
   }).then((res)=>{
      Indicator.close();
     if(res.data.code == '6000') {
+      setStore('PRE_URL', window.location.href);
       Toast({
           message: res.data.msg,
           duration: 1000
       });
       setTimeout(() => {
-          window.history.replaceState(null, '登录', loginUrl);
-          history.go(0);
-          return;
+          if(isweixin()){
+            window.location.href = redirectUri;
+          }else{
+            window.history.replaceState(null, '登录', loginUrl);
+            history.go(0);
+            return;
+          }
       }, 1000);
     }else if(res.data.code == '4010') {
       Toast({
@@ -137,8 +154,8 @@ export const applyIdInfo = (params) => {
 export const getCode = (telNumber,params) => {
   return myFetchNoLogin('webapp/api/j/getCode/'+telNumber,params);
 };
-export const mobileLogin = (telNumber,verifyCode,params) => {
-  return myFetchNoLogin('webapp/api/j/mobileLogin/'+telNumber+'/'+verifyCode,params);
+export const mobileLogin = (telNumber,verifyCode,jsCode,params) => {
+  return myFetchNoLogin('webapp/api/j/mobileLogin/'+jsCode+'/'+telNumber+'/'+verifyCode,params);
 };
 export const getKeyCodeList = (params) => {
   return myFetch('webapp/api/j/getKeyCodeList',params);

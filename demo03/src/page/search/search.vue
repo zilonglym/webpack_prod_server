@@ -2,6 +2,7 @@
   <div>
     <head-top :head-title="'订房'">
     </head-top>
+    hahah
     <div class="hotelsearch-wrapper" v-bind:class="[searchshowStatus?'show':'']">
       <div class="searchcity-wrapper bg-white pl15">
         <div class="searchcity-title fb pt15 pb10 border-bottom">城市</div>

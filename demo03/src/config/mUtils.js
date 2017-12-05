@@ -23,6 +23,19 @@ export const removeStore = name => {
 	if (!name) return;
 	window.localStorage.removeItem(name);
 }
+
+/**
+ * 判断userAgent是否是微信
+ */
+export const isweixin = () => {
+  var ua = navigator.userAgent.toLowerCase();
+  if (ua.match(/MicroMessenger/i) == "micromessenger") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 /*
 *  格式化时间
 * */
@@ -89,13 +102,23 @@ export const getNextDate = curDate => {
  * 获取两个日期相差天数
  */
 export const getDateDiff = (sDate1, sDate2) => {
-  var  aDate,  oDate1,  oDate2,  iDays
-  aDate  =  sDate1.split("-")
-  oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式
-  aDate  =  sDate2.split("-")
-  oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])
-  iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数
-  return  iDays
+  // var  aDate,  oDate1,  oDate2,  iDays
+  // aDate  =  sDate1.split("-")
+  // oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2002格式
+  // aDate  =  sDate2.split("-")
+  // oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])
+  // iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数
+  // return  iDays
+    var strSeparator = "-"; //日期分隔符
+    var oDate1;
+    var oDate2;
+    var iDays;
+    oDate1= sDate1.split(strSeparator);
+    oDate2= sDate2.split(strSeparator);
+    var strDateS = new Date(oDate1[0], oDate1[1]-1, oDate1[2]);
+    var strDateE = new Date(oDate2[0], oDate2[1]-1, oDate2[2]);
+    iDays = parseInt(Math.abs(strDateS - strDateE ) / 1000 / 60 / 60 /24)//把相差的毫秒数转换为天数
+    return iDays ;
 }
 
 /**

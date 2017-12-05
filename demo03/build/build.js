@@ -26,5 +26,5 @@ webpack(webpackConfig, function(err, stats) {
         chunks: false,
         chunkModules: false
     }) + '\n')
-    cp('-Rf', ['wxInfo.html', 'portal.html', 'howtoopen.html', 'detail.html'], 'web');
+    cp('-Rf', ['detail.html'], 'web');
 })

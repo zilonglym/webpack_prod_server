@@ -53,6 +53,9 @@
     import alertTip from '../../components/common/alertTip'
     import {mapState, mapMutations} from 'vuex'
     import {mobileLogin,getCode} from '../../service/getData'
+    import {isweixin} from '../../config/mUtils';
+    import {loginUrl} from '../../config/env';
+    import {getStore} from '../../config/mUtils';
 
     function scrollToTop(){
       window.scrollTo(0,44);
@@ -67,9 +70,23 @@
               checkStatus:true,
               VerifyStatus:true,
               btnText:'获取验证码',
-              onceGetTime:30
+              onceGetTime:30,
+              jsCode:''
             }
         },
+      created(){
+        var queryData = this.$route.query;
+        if(queryData.code){
+          this.jsCode = queryData.code;
+        }else{
+          if(isweixin()){
+            var redirectUri="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0ffba5eb14604a45&" +
+              "redirect_uri=" +window.location.protocol+"//"+window.location.host+loginUrl+"&"+
+              "response_type=code&scope=snsapi_userinfo&state=0#wechat_redirect";
+            window.location.href = redirectUri;
+          }
+        }
+      },
         components: {
             headTop
         },
@@ -132,10 +149,15 @@
               this.$toast('请先勾选同意用户协议');
               return
             }else{
-              mobileLogin(_self.telNumber,_self.VerifyCode,
+              mobileLogin(_self.telNumber,_self.VerifyCode,_self.jsCode,
                 {success:(data)=>{
                   localStorage.KKWEBAPP_sessionId=data.sessionId; // 存入一个值
-                  _self.$router.push({path: 'key', replace: true});
+                    let PRE_URL = getStore('PRE_URL');
+                    if (PRE_URL) {
+                        window.location.href = PRE_URL;
+                    } else {
+                        _self.$router.push({path: 'key', replace: true});
+                    };
                 }
               });
             }
@@ -149,7 +171,7 @@
             timer = setInterval(function () {
               --num;
               _self.getVerifyCodeStatus = true;
-              _self.btnText=num+'s后重发';
+              _self.btnText=num+'s后可重发';
               if (num <= 0) {
                 clearInterval(timer);
                 _self.getVerifyCodeStatus = false;

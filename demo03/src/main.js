@@ -9,6 +9,7 @@ import FastClick from 'fastclick'
 import './fonts/iconfont'
 import './directive/directive'
 
+
 import VuePreview from 'vue-preview'
 Vue.use(VuePreview)
 

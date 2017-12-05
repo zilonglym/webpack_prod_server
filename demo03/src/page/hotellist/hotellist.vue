@@ -1,10 +1,10 @@
 <template>
   <div style="height:100%;">
    <!-- <head-top headTitle="订房" toPath="search"></head-top>-->
-    <div class="wp100 hp100 of-y">
-      <div class="hotel_list_container hp100" v-infinite-scroll="loadMore"
+    <div class="wp100 hp100 of-y" >
+        <div class="hotel_list_container hp100" v-infinite-scroll="loadMore"
            infinite-scroll-disabled="loading"
-           infinite-scroll-distance="5">
+           infinite-scroll-distance="5" >
           <router-link :to="{path: 'datepicker'}">
               <div class="dayPickerLayout clearfix">
                     <span class="fl">
@@ -33,6 +33,10 @@
                   </div>
                 </router-link>
               </div>
+              <!--暂无数据 start-->
+              <div class="noData" v-if="isShowLoadedTips&&hotelList.length == 0">
+                  <img src="../../images/nodata.png" alt="暂无数据" />
+              </div>
           </mt-loadmore>
         <!--<loading v-show="isShowLoadingTips"></loading>-->
         <!--<p  v-show="isShowLoadingTips" class="ac">
@@ -43,10 +47,7 @@
       </div>
     </div>
     <!--v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" -->
-    <!--暂无数据 start-->
-    <div class="noData" v-if="isShowLoadedTips&&hotelList.length == 0">
-      <img src="../../images/nodata.png" alt="暂无数据" />
-    </div>
+
   </div>
 </template>
 
@@ -81,7 +82,7 @@
             const queryData = _self.$route.query;
 
             _self.INIT_HOTEL_LIST();
-            queryData.pageSize = 3;
+            queryData.pageSize = 10;
             queryData.pageNum = 0;
             if (fromPath !== '/web/datepicker') {      // search, coupnlist回跳
                 if (!queryData.checkinDate||!queryData.checkoutDate) {
@@ -285,7 +286,7 @@
         background-color: #EAEAEA;
         margin-bottom: 10px;
         position: relative;
-        min-height: 7.7rem;
+        min-height: 8.5rem;
     }
   .swiperImgLayout img{
      float: left;

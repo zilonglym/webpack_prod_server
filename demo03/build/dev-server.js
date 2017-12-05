@@ -8,14 +8,22 @@ var proxyMiddleware = require('http-proxy-middleware')
 var env = process.env.NODE_ENV.trim();
 var webpackConfig = env === 'testing'? require('./webpack.prod.conf'):require('./webpack.dev.conf');
 
+
+// add hot-reload related code to entry chunks
+Object.keys(webpackConfig.entry).forEach(function(name) {
+    webpackConfig.entry[name] = ['./build/dev-client'].concat(webpackConfig.entry[name])
+})
+
+webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
     // Define HTTP proxies to your custom API backend
     // https://github.com/chimurai/http-proxy-middleware
 
 var server = express()
-var compiler = webpack(webpackConfig)
-console.log('webpackConfig.output.publicPath: ', webpackConfig.output.publicPath);
+var compiler = webpack(webpackConfig);
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
     publicPath: webpackConfig.output.publicPath,
     stats: {
@@ -75,7 +83,6 @@ devMiddleware.waitUntilValid(function(){
 });
 
 // serve pure static assets
-// vue-cli中webpack配置解析 > 关于打包输出路径和访问路径解说
 // express.static('static')只对真实目录有用，对虚拟内存目录无用(即对dev的server无用)
 // 因此，这部分可删除
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
@@ -86,7 +93,7 @@ module.exports = server.listen(port, function(err) {
         console.log(err)
         return
     }
-   /* var uri = 'http://localhost:' + port
+    /*var uri = 'http://localhost:' + port
     console.log('Listening at ' + uri + '\n')
 
     // when env is testing, don't need open it

@@ -13,12 +13,12 @@ var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
 module.exports = {
     entry: {
-        app: './src/main.js'
+        app: './src/main.js',
     },
     output: {
         path: config.build.assetsRoot,
         publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
-        filename: '[name].js'
+        filename: '[name].js',
     },
     resolve: {
         extensions: ['', '.js', '.vue', '.less', '.css', '.scss'],
@@ -37,7 +37,8 @@ module.exports = {
         loaders: [{
             test: /\.vue$/,
             loader: 'vue'
-        }, {
+        },
+        {
             test: /vue-preview.src.*?js$/,
             loader: 'babel'
         },{

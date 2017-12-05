@@ -5,11 +5,17 @@
         <div class="roomtypedetailLayout">
             <div class="roomtypedetailTop">
                 <div class="swipeLayout">
-                  <swiper>
-                    <swiper-slide v-for="items in roomTypeDetail.imgUrlList">
-                      <img v-imgsrc="items" alt="" />
-                    </swiper-slide>
-                  </swiper>
+                    <template v-if="roomTypeDetail.imgUrlList && roomTypeDetail.imgUrlList.length > 1">
+                        <swiper :options="swiperOption_roomtypeDetail" >
+                            <swiper-slide v-for="items in roomTypeDetail.imgUrlList">
+                                <img class="preview-img" alt=""  v-imgsrc="items" @click="$preview.open(index_hotelDetail, roomTypeDetail.configUrlList, previewImgsOptions)"/>
+                            </swiper-slide>
+                            <div class="swiper-pagination" slot="pagination"></div>
+                        </swiper>
+                    </template>
+                    <template v-if="roomTypeDetail.imgUrlList && roomTypeDetail.imgUrlList.length <= 1">
+                        <img class="preview-img"  v-imgsrc="roomTypeDetail.imgUrlList[0]" alt="" @click="$preview.open(0, roomTypeDetail.configUrlList, previewImgsOptions)"/>
+                    </template>
                 </div>
                 <div>{{roomTypeDetail.roomTypeName}}</div>
             </div>
@@ -50,9 +56,25 @@
 
     export default {
         data(){
-            return{
+            return {
                 hotelId:null,
                 toPath:null,
+                /*index_hotelDetail: 0,
+                swiperOption_roomtypeDetail: {
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    onSlideChangeStart: (swiper) => {
+                        console.log('onSlideChangeEnd', swiper.realIndex)
+                    }
+                },*/
+                index_hotelDetail: 0,
+                swiperOption_roomtypeDetail: {
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    onSlideChangeStart:(_swiper) => {
+                        this.index_hotelDetail = _swiper.realIndex;
+                    }
+                },
             }
         },
         created(){
@@ -64,6 +86,11 @@
             //初始化数据
             this.initData();
         },
+        destroyed() {
+            try {
+                this.$preview.close();
+            }catch(e){};
+        },
         components: {
             headTop,
             swiper,
@@ -71,7 +98,7 @@
         },
         computed: {
           ...mapState([
-            'roomTypeDetail'
+            'roomTypeDetail', 'previewImgsOptions'
           ])
         },
         methods: {
@@ -119,8 +146,10 @@
         color: #222;
     }
     .swipeLayout{
-        height:9.8rem;
+        height:9.5rem;
         background-color: #eaeaea;
         margin-bottom: 10px;
+        position: relative;
+        overflow: hidden;
     }
 </style>

@@ -1,9 +1,10 @@
 <template>
   <div class="roomDetailLayout">
-    <head-top :head-title="'订单详情'" goBack="true"></head-top>
+    <head-top :head-title="headTitle" goBack="true">
+      <span class="title_text">{{headTitle}}</span>
+    </head-top>
     <!--顶部end-->
-    <!--orderDetail.orderStatus == 1-->
-    <div class="successTips" v-if="isPaidSuccess">
+    <div class="successTips">
       <span><img src="../../images/勾.png" alt=""></span>
       支付成功
     </div>
@@ -14,62 +15,63 @@
             <use xlink:href="#icon-hotel"></use>
           </svg>
           {{orderDetail.hotelName}}
-          <span class="fr">{{orderStatusTxt}}</span>
+          <span class="fr">{{orderDetail.orderStatus | showOrderStatus}}</span>
         </div>
         <div class="payLayoutLabel">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-tuoyuan"></use>
           </svg>
-          {{orderDetail.address}}
+          &nbsp;&nbsp;{{orderDetail.address}}
         </div>
         <div class="payLayoutLabel">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-phone"></use>
           </svg>
-          {{orderDetail.telephoneNo}}
+          &nbsp;&nbsp;{{orderDetail.telephoneNo}}
         </div>
         <div class="my-ListLayout-last payLayoutLabel">
           <span>入住：</span>{{orderDetail.checkinDate}}
-          <span class="ml10">离店：</span>{{orderDetail.checkoutDate}}
+          &nbsp;&nbsp;<span class="ml10">离店：</span>{{orderDetail.checkoutDate}}
           <i class="fr">{{orderDetail.dateDiff}}晚</i>
         </div>
       </div>
       <div class="payhotelList">
         <ul>
-          <li class="clearfix" v-for="itemr in orderDetail.orderRoomTypeList">
+          <li class="clearfix" v-for="iteml in orderDetail.orderRoomTypeList">
+            <div class="payhotelListImg fl">
+              <img  v-imgsrc="iteml.roomTypeImgUrl" alt=""/>
+            </div>
+            <div class="payhotelListRight">
+              <div class="hotelName payLayoutLabel">
+                {{iteml.roomTypeName}}
+              </div>
+              <div class="hotelPrice ">
+                <span class="col999">单&nbsp;价:</span> &nbsp;¥{{iteml.totalPrice}}
+                <span class="roomTime" @click="iteml.popupVisibleRoomTime = true"><img src="../../images/time.png" alt=""></span>
+                <span class="fr">×{{iteml.roomCount}}间</span>
+              </div>
+            </div>
             <!--弹出订房时间-->
-            <mt-popup v-model="itemr.popupVisibleRoomTime" pop-transition="popup-fade">
+            <mt-popup v-model="iteml.popupVisibleRoomTime" pop-transition="popup-fade">
               <div class="roomTimeLayout  payLayoutLabel">
-                <div class="roomTimeName">{{itemr.roomTypeName}}</div>
+                <div class="roomTimeName">{{iteml.roomTypeName}}</div>
                 <div class="roomTimeContain clearfix">
-                  <span class="fl">{{itemr.stayDatePriceList.length}}晚×{{itemr.roomCount}}间</span>
-                  <span class="fr">¥{{itemr.totalPrice}}</span>
+                  <span class="fl">{{iteml.stayDatePriceList.length}}晚×{{iteml.roomCount}}间</span>
+                  <span class="fr">¥{{iteml.totalPrice}}</span>
                 </div>
-                <ul>
-                  <li class="clearfix" v-for="dayPrice in itemr.stayDatePriceList">
+                <ul class="roompriceList">
+                  <li class="clearfix" v-for="dayPrice in iteml.stayDatePriceList">
                     <span class="fl">{{dayPrice.day}}</span>
                     <span class="fr">¥{{dayPrice.price}}</span>
                   </li>
                 </ul>
-                <div class="popupVisibleRoomTimeClose" @click="itemr.popupVisibleRoomTime = false">关闭</div>
+                <div class="popupVisibleRoomTimeClose" @click="iteml.popupVisibleRoomTime = false">关闭</div>
               </div>
             </mt-popup>
-            <div class="payhotelListImg fl">
-              <img  v-imgsrc="itemr.roomTypeImgUrl" alt="" v-if="itemr.roomTypeImgUrl"/>
-            </div>
-            <div class="payhotelListRight">
-              <div class="hotelName payLayoutLabel">
-                {{itemr.roomTypeName}}
-              </div>
-              <div class="hotelPrice ">
-                <span class="col999">单&nbsp;价:</span> &nbsp;¥{{itemr.totalPrice}}
-                <span class="roomTime" @click="itemr.popupVisibleRoomTime = true"><img src="../../images/time.png" alt=""></span>
-                <span class="fr">×{{itemr.roomCount}}间</span>
-              </div>
-            </div>
           </li>
         </ul>
       </div>
+      <!--弹出订房时间-->
       <div class="payhotelStatistics">
         <div class="payLayoutLabel">
           订单总额
@@ -96,30 +98,18 @@
 <script>
     import {mapState, mapMutations} from 'vuex'
     import loading from '../../components/common/loading'
-    import {animate,getStore,getDateDiff} from '../../config/mUtils'
+    import {animate,getStore,accSubtr,getDateDiff,isweixin} from '../../config/mUtils'
     import headTop from '../../components/header/head'
-    import {getOrderDetail} from '../../service/getData'
-
-    let fromPath = "";
+    import {getCoupon,addOrder,addOrderAgain,getOrderDetail,getPaymentSign} from '../../service/getData'
+    import couponList from '../coupon/coupon'
+    import {baseUrl} from '../../config/env'
     export default {
         data(){
             return{
-                orderId:null,
-                orderDetail:{},
-                orderStatusTxt:'',
-                isPaidSuccess: false
-            }
-        },
-        beforeRouteEnter(to, from, next) {
-            fromPath = from.path;
-            next();
-        },
-        created(){
-            let _self = this;
-            _self.orderId = this.$route.query.orderId;
-
-            if (fromPath == '/web/orderdetail') {
-                _self.isPaidSuccess = true;
+                headTitle:'订房',
+                showLoading: true, //显示加载动画
+                preventRepeatRequest: false,// 防止多次触发数据请求,
+                orderDetail:{}
             }
         },
         mounted(){
@@ -130,45 +120,45 @@
             headTop,
             loading
         },
-
+        filters: {
+          showOrderStatus: function (value) {
+            switch(value) {
+              case '0':
+                return '待支付';
+              case '1':
+                return '待入住';
+              case '2':
+                return '已入住';
+              case '3':
+                return '已离店';
+              case '4':
+                return '已取消';
+            };
+          }
+        },
         methods: {
-          //初始化时获取基本数据
+            //初始化时获取基本数据
             initData(){
-                var _self = this;
-                getOrderDetail({
-                  data:{
-                    orderId:this.orderId,
-                  },
-                  success:(data)=>{
-                    var orderDetail = data;
-                    for(var i=0;i<orderDetail.orderRoomTypeList.length;i++){
-                      orderDetail.orderRoomTypeList[i].popupVisibleRoomTime=false;
-                    }
-                    _self.orderDetail = orderDetail;
-                    _self.orderStatusTxt = _self.orderStatusFun(data.orderStatus);
-                    _self.orderDetail.dateDiff = getDateDiff(_self.orderDetail.checkinDate,_self.orderDetail.checkoutDate);
+                var orderId = this.$route.query.orderId;
+                this.initOrderByRequest(orderId);
+            },
+            initOrderByRequest(orderId){
+              var _self = this;
+              getOrderDetail({
+                data:{orderId:orderId},
+                success:(data)=>{
+                  var orderDetail = data;
+                  for(var i=0;i<orderDetail.orderRoomTypeList.length;i++){
+                    orderDetail.orderRoomTypeList[i].popupVisibleRoomTime=false;
                   }
-                });
-            },
-            orderStatusFun(num) {
-                // 0,待支付，1 待入住 2 已入住，3 已离店 4已取消
-                const self = this;
-                switch(num) {
-                    case '0':
-                        self.setData({
-                            isEditable: true
-                        });
-                        return '待支付';
-                    case '1':
-                        return '待入住';
-                    case '2':
-                        return '已入住';
-                    case '3':
-                        return '已离店';
-                    case '4':
-                        return '已取消';
-                };
-            },
+                  orderDetail.dateDiff = getDateDiff(orderDetail.checkinDate,orderDetail.checkoutDate);
+                  _self.orderDetail = orderDetail;
+                  if(orderDetail.orderStatus == '1'){
+                      _self.showModel.paySuccessIco=true;
+                  }
+                }
+              });
+            }
         }
     }
 </script>
@@ -196,11 +186,10 @@
   }
   .payhotelInfo{
     background: #fff;
+    /*padding-top: 45px;*/
+    font-size: 0.55rem;
   }
-  .payLayoutLabel .creatTime{
-    padding: 0;
-    border: none;
-  }
+
   .payhotelStatistics div,
   .payhotelInfo div{
     padding: 5px 15px;
@@ -225,7 +214,6 @@
     width: 34%;
     height: 68px;
     background-color: #eaeaea;
-    border-radius: 6px;
   }
   .payhotelList li .payhotelListImg img{
     width: 100%;
@@ -242,10 +230,10 @@
   }
   .payhotelListRight .hotelName{
     color: #000;
-    font-size: 13px;
   }
   .payhotelListRight .hotelPrice{
     width: 100%;
+    line-height: 34px;
   }
   .payhotelStatistics{
     background: #fff;
@@ -256,7 +244,7 @@
     margin: 20px auto;
     height: 44px;
     line-height: 44px;
-    font-size: 18px;
+    font-size: 0.7rem;
     border-radius: 4px;
     color: #fffefe;
     border: 1px solid #d5d5d5;
@@ -291,6 +279,10 @@
     color: #222;
     height: 36px;
     line-height: 36px;
+  }
+  .roomTimeLayout .roompriceList{
+    max-height: 15rem;
+    overflow-y: auto;
   }
   .roomTimeLayout .roomTimeContain span{
     display: inline-block;
@@ -352,7 +344,7 @@
     text-align: center;
     background: #fff;
   }
-  .mint-popup-right{
+    .mint-popup-right{
     width: 100%;
     height: 100%;
     overflow-y: auto;

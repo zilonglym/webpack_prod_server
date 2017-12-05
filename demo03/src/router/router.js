@@ -5,11 +5,12 @@ const key = r => require.ensure([], () => r(require('../page/key/key')), 'key')
 const hotellist = r => require.ensure([], () => r(require('../page/hotellist/hotellist')), 'hotellist')
 const keydetail = r => require.ensure([], () => r(require('../page/keydetail/keydetail')), 'keydetail')
 const hoteldetail = r => require.ensure([], () => r(require('../page/hoteldetail/hoteldetail')), 'hoteldetail')
-const orderdetail = r => require.ensure([], () => r(require('../page/orderdetail/orderdetail')), 'orderdetail')
+const orderdetail = r => require.ensure([], () => r(require('../page/orderdetails/orderdetail')), 'orderdetail')
+const ordersucc = r => require.ensure([], () => r(require('../page/orderdetails/ordersucc')), 'ordersucc')
+
 const coupon = r => require.ensure([], () => r(require('../page/coupon/coupon')), 'coupon')
 const me = r => require.ensure([], () => r(require('../page/me/me')), 'me')
 const ordertab = r => require.ensure([], () => r(require('../page/ordertab/ordertab')), 'ordertab')
-const ordertabdetail = r => require.ensure([], () => r(require('../page/ordertabdetail/ordertabdetail')), 'ordertabdetail')
 const coupontab = r => require.ensure([], () => r(require('../page/coupontab/coupontab')), 'coupontab')
 const couponhotel = r => require.ensure([], () => r(require('../page/couponhotel/couponhotel')), 'couponhotel')
 const register = r => require.ensure([], () => r(require('../page/register/register')), 'register')
@@ -17,7 +18,6 @@ const login = r => require.ensure([], () => r(require('../page/login/login')), '
 const search = r => require.ensure([], () => r(require('../page/search/search')), 'search')
 const datepicker = r => require.ensure([], () => r(require('../page/datepicker/datepicker')), 'datepicker')
 const map = r => require.ensure([], () => r(require('../page/map/map')), 'map')
-const ordersuccessdetail = r => require.ensure([], () => r(require('../page/ordersuccessdetail/ordersuccessdetail')), 'ordersuccessdetail')
 const roomtypedetail = r => require.ensure([], () => r(require('../page/hoteldetail/children/roomtypedetail')), 'roomtypedetail')
 const howtoopen = r => require.ensure([], () => r(require('../page/howtoopen/howtoopen')), 'howtoopen')
 const agreement = r => require.ensure([], () => r(require('../page/agreement/agreement')), 'agreement')
@@ -46,7 +46,7 @@ export default [
           path: root+'/map',
           component: map,
             meta: {
-                title: ''
+                title: '地图'
             }
         },
         {
@@ -98,13 +98,20 @@ export default [
               title: '入住登记'
           }
       },
-      {
+    {
         path: root+'/orderdetail',
         component: orderdetail,
-          meta: {
-              title: '订单详情'
-          }
-      },
+        meta: {
+            title: '订单详情'
+        }
+    },
+    {
+        path: root+'/ordersucc',
+        component: ordersucc,
+        meta: {
+            title: '支付成功'
+        }
+    },
       {
         path: root+'/coupon',
         component: coupon,
@@ -112,13 +119,6 @@ export default [
               title: ''
           }
       },
-        {
-        path: root+'/ordersuccessdetail',
-        component: ordersuccessdetail,
-            meta: {
-                title: '订单详情'
-            }
-        },
         {
             path: root+'/roomtypedetail',
             component: roomtypedetail,
@@ -135,7 +135,10 @@ export default [
         },
         {
             path: root+'/agreement',
-            component: agreement
+            component: agreement,
+            meta: {
+                title: '用户注册协议'
+            }
         },
         {
             path: root+'/ordertab',
@@ -149,13 +152,6 @@ export default [
             component: coupontab,
             meta: {
                 title: '卡券'
-            }
-        },
-        {
-            path: root+'/ordertabdetail',
-            component: ordertabdetail,
-            meta: {
-                title: '订单详情'
             }
         },
         {

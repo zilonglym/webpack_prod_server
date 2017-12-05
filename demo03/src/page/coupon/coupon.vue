@@ -146,7 +146,9 @@
     margin: 0.1rem 0;
     margin-top: 2.5rem;
     padding: 10px 15px;
+    padding-left: 25px;
     background-color: #fff;
+    position: relative;
   }
   .nouseLayout span{
     display: inline-block;
@@ -166,6 +168,9 @@
     top:-4px;
     z-index: 2;
     opacity: 0;
+  }
+  .nouseLayout .nouseCheckbox{
+    right: 0.75rem;
   }
   .nouseCheckbox{
     position: absolute;

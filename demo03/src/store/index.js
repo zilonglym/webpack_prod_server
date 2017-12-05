@@ -7,15 +7,24 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state = {
-  hotelQuery: {},
-  roomTypeDetail: {},
-  hotelList: [],
-  optionalCity:[],
+    hotelQuery: {},
+    roomTypeDetail: {},
+    hotelList: [],
+    optionalCity: [],
+    previewImgsOptions: {
+        captionEl: false,
+        fullscreenEl: false,
+        history: false,
+        shareEl: false,
+        tapToClose: true,
+        showAnimationDuration: 0,
+        hideAnimationDuration: 0
+    }
 }
 
 export default new Vuex.Store({
-	state,
-	getters,
-	actions,
-	mutations,
+    state,
+    getters,
+    actions,
+    mutations,
 })

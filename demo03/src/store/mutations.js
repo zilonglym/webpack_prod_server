@@ -89,9 +89,24 @@ export default {
       setStore('KKWEBAPP_roomTypeDetail', state.roomTypeDetail);
     },
     [INIT_ROOMTYPE_DETAIL](state) {
-      let initRoomTypeDetail = getStore('KKWEBAPP_roomTypeDetail');
+      let initRoomTypeDetail = JSON.parse(getStore('KKWEBAPP_roomTypeDetail'));
+
       if (initRoomTypeDetail) {
-        state.roomTypeDetail = JSON.parse(initRoomTypeDetail);
+          initRoomTypeDetail.configUrlList = [];
+          if(initRoomTypeDetail.imgUrlList && initRoomTypeDetail.imgUrlList.length > 0) {
+              initRoomTypeDetail.imgUrlList.forEach((url)=>{
+                  let obj = {
+                      src: url,
+                      w: 600,
+                      h: 400
+                  };
+                  initRoomTypeDetail.configUrlList.push(obj);
+              });
+          } else {
+              initRoomTypeDetail.imgUrlList = [];
+          };
+
+        state.roomTypeDetail = initRoomTypeDetail;
       }
     },
     [SAVE_HOTEL_LIST](state, {

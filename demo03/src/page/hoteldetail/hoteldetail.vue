@@ -7,22 +7,23 @@
           <template v-if="hotelDetailInfo.imgUrlList && hotelDetailInfo.imgUrlList.length > 1">
             <swiper :options="swiperOption_hotelDetail" >
               <swiper-slide v-for="items in hotelDetailInfo.imgUrlList">
-                <img v-imgsrc="items.src" alt=""/>
+                <img class="preview-img" v-imgsrc="items.src" alt="" @click="$preview.open(index_hotelDetail, hotelDetailInfo.imgUrlList, previewImgsOptions)"/>
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
             </swiper>
           </template>
           <template v-if="hotelDetailInfo.imgUrlList && hotelDetailInfo.imgUrlList.length <= 1">
-            <img v-imgsrc="hotelDetailInfo.imgUrlList[0].src" alt=""/>
+            <img class="preview-img" alt="" v-imgsrc="hotelDetailInfo.imgUrlList[0].src"  @click="$preview.open(0, hotelDetailInfo.imgUrlList, previewImgsOptions)"/>
           </template>
         </div>
         <div class="hotelName detailAdd">
           {{hotelDetailInfo.hotelName}}
           <a v-bind:href="hotelDetailInfo.website" class="toHomeBtn" v-if="hotelDetailInfo.website">
-            <img src="../../images/酒店官网 - Assistor.png" alt="" />
+            <img src="../../images/toIndex.png" alt="" />
           </a>
         </div>
-        <div class="hotelAddress detailAdd clearfix" @click="showMap">
+        <!--@click="showMap"-->
+        <div class="hotelAddress detailAdd clearfix" >
           <span class="fl">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-tuoyuan"></use>
@@ -63,12 +64,12 @@
             <template v-if="itemr.imgUrlList && itemr.imgUrlList.length>1">
               <swiper :options="itemr.swiperOption"  >
                 <swiper-slide v-for="(items, indexd) in itemr.imgUrlList">
-                  <img class="preview-img" v-imgsrc="items" alt="" @click="$preview.open(itemr.curIndex, itemr.configUrlList)"/>
+                  <img class="preview-img" v-imgsrc="items" alt="" @click="$preview.open(itemr.curIndex, itemr.configUrlList, previewImgsOptions)"/>
                 </swiper-slide>
               </swiper>
             </template>
             <template v-if="itemr.imgUrlList && itemr.imgUrlList.length <= 1">
-              <img v-imgsrc="itemr.imgUrlList[0]" alt="" />
+              <img class="preview-img" alt="" v-imgsrc="itemr.imgUrlList[0]" @click="$preview.open(0, itemr.configUrlList, previewImgsOptions)"/>
             </template>
           </div>
           <div class="roomTypeTitle">
@@ -84,18 +85,18 @@
               入住{{dateDiff}}晚 &nbsp; &nbsp;<i v-if="itemr.orderRooms == 0">单价：</i><i v-else>总价：</i>
               <span>
                 CNY
-                <span class="hotelPriceNum" v-if="itemr.orderRooms == 0">{{itemr.price}}</span>
-                <span class="hotelPriceNum" v-else>{{itemr.sumPrice}}</span>
+                <span class="hotelPriceNum" v-if="itemr.roomCount == 0">{{itemr.price}}</span>
+                <span class="hotelPriceNum" v-else>{{itemr.totalPrice}}</span>
               </span>
               <img src="../../images/infor.png" alt=""  @click="itemr.popupVisibleRoomTime = true"/>
               <div class="addRoom">
                 <span class="addRoomM fl" @click="minCount(itemr)">
-                  <img src="../../images/btn-2.png" alt="" v-if="itemr.orderRooms <= 0"/>
+                  <img src="../../images/btn-2.png" alt="" v-if="itemr.roomCount <= 0"/>
                   <img src="../../images/btn-4.png" alt="" v-else/>
                 </span>
-                {{itemr.orderRooms}}间
+                {{itemr.roomCount}}间
                 <span class="addRoomP fr" @click="addCount(itemr)">
-                  <img src="../../images/btn-1.png" alt=""  v-if="itemr.orderRooms < itemr.count"/>
+                  <img src="../../images/btn-1.png" alt=""  v-if="itemr.roomCount < itemr.count"/>
                   <img src="../../images/btn-3.png" alt=""  v-else/>
                 </span>
               </div>
@@ -105,8 +106,8 @@
                 <div class="roomTimeLayout  payLayoutLabel">
                   <div class="roomTimeName">{{itemr.roomTypeName}}</div>
                   <div class="roomTimeContain clearfix">
-                    <span class="fl">{{itemr.stayDatePriceList.length}}晚×{{itemr.orderRooms}}间</span>
-                    <span class="fr">¥{{itemr.price*itemr.orderRooms}}</span>
+                    <span class="fl">{{itemr.stayDatePriceList.length}}晚×{{itemr.roomCount}}间</span>
+                    <span class="fr">¥{{itemr.price*itemr.roomCount}}</span>
                   </div>
                   <ul class="roompriceList">
                     <li class="clearfix" v-for="dayPrice in itemr.stayDatePriceList">
@@ -254,11 +255,12 @@
                 totalCount:0,//总订房数
                 totalPrice:0,//总价格
                 orderDetail:{},
+                index_hotelDetail: 0,
                 swiperOption_hotelDetail: {
                     pagination: '.swiper-pagination',
                     paginationClickable: true,
-                    onSlideChangeStart: swiper => {
-                        console.log('onSlideChangeEnd', swiper.realIndex)
+                    onSlideChangeStart: (_swiper) => {
+                        this.index_hotelDetail = _swiper.realIndex;
                     }
                 },
             }
@@ -277,6 +279,11 @@
             //初始化数据
             this.initData();
         },
+        destroyed() {
+            try {
+                this.$preview.close();
+            }catch(e){};
+        },
         components: {
           headTop,
           swiper,
@@ -284,7 +291,7 @@
         },
         computed: {
             ...mapState([
-                'hotelQuery'
+                'hotelQuery','previewImgsOptions'
             ])
         },
 //      mixins: [Popup],
@@ -300,9 +307,9 @@
               this.$router.push({path: 'map', query:{hotelName:this.hotelDetailInfo.hotelName,latitude:this.hotelDetailInfo.latitude,longitude:this.hotelDetailInfo.longitude}});
             },
             // 预览图片
-            previewImg(index, list) {
+            /*previewImg(index, list) {
               console.log(index, VuePreview);
-            },
+            },*/
             //初始化时获取基本数据
             initData(){
                 //获取商铺信息
@@ -321,35 +328,48 @@
 
                       hotelDetailData.roomTypeForSaleList[i].popupVisibleRoomTime = false;
                       itemRooms.configUrlList = [];
-                      itemRooms.orderRooms = 0;
-                      itemRooms.sumPrice = 0;
+                      itemRooms.roomCount = 0;
+                      itemRooms.totalPrice = 0;
                       itemRooms.curIndex = 0;
                       itemRooms.swiperOption ={
                           autoplay: false,
-                          onSlideChangeStart: swiper => {
-                              hotelDetailData.roomTypeForSaleList[i].curIndex = swiper.realIndex;
+                          onSlideChangeStart:(_swiper) => {
+                              hotelDetailData.roomTypeForSaleList[i].curIndex = _swiper.realIndex;
                           }
                       };
-                      imgUrlListItem.forEach((url) => {
-                          let obj = {
-                              src: url,
-                              w: 600,
-                              h: 400
-                          }
-                          itemRooms.configUrlList.push(obj);
-                      });
+                      if(imgUrlListItem && imgUrlListItem.length > 0) {
+                          itemRooms.roomTypeImgUrl = imgUrlListItem[0];
+                          imgUrlListItem.forEach((url) => {
+                              let obj = {
+                                  src: url,
+                                  w: 600,
+                                  h: 400
+                              }
+                              itemRooms.configUrlList.push(obj);
+                          });
+                      } else {
+                          hotelDetailData.roomTypeForSaleList[i].imgUrlList = [];
+                      };
                     }
-                    if(hotelDetailData.imgUrlList){
+                    if(hotelDetailData.imgUrlList && hotelDetailData.imgUrlList.length){
                       for(var i=0;i<hotelDetailData.imgUrlList.length;i++) {
                         var item = hotelDetailData.imgUrlList[i];
-                        var obj = {
+                        /*var obj = {
                           src:item,
-                          error:require('../../images/defaultHotel.png'),
+                          w:require('../../images/defaultHotel.png'),
                           loading:require('../../images/defaultHotel.png')
+                        }*/
+                        var obj = {
+                            src: item,
+                            w: 600,
+                            h: 400
                         }
                         hotelDetailData.imgUrlList[i]=obj;
                       }
-                    }
+                    } else {
+                        hotelDetailData.imgUrlList = [];
+                    };
+
                     _self.hotelDetailInfo = hotelDetailData;
                     var orderDetail = {};
                     orderDetail.hotelId=hotelDetailData.hotelId;
@@ -359,46 +379,46 @@
                     orderDetail.checkinDate = this.checkinDate;
                     orderDetail.checkoutDate = this.checkoutDate;
                     orderDetail.dateDiff = this.dateDiff;
-                    orderDetail.orderRoomList = [];
-                    orderDetail.totalCount=0;
-                    orderDetail.totalPrice=0;
+                    orderDetail.orderRoomTypeList = [];
+                    orderDetail.roomTotalCount=0;
+                    orderDetail.orderAmount=0;
                     _self.orderDetail=orderDetail;
                   }
                 });
             },
             //minCount
             minCount(itemr){
-                if (itemr.orderRooms <= 0) {
-                    itemr.orderRooms = 0;
+                if (itemr.roomCount <= 0) {
+                    itemr.roomCount = 0;
                     return;
                 };
-                itemr.orderRooms -= 1;
+                itemr.roomCount -= 1;
                 this.calcuSumPrice(itemr);
             },
             //addCount
             addCount(itemr){
-                if (itemr.orderRooms >= itemr.count) {
-                    itemr.orderRooms = itemr.count;
+                if (itemr.roomCount >= itemr.count) {
+                    itemr.roomCount = itemr.count;
                     return;
                 };
-                itemr.orderRooms += 1;
+                itemr.roomCount += 1;
                 this.calcuSumPrice(itemr);
             },
             calcuSumPrice (item) {
-                item.sumPrice = accMul(item.orderRooms,item.price);
+                item.totalPrice = accMul(item.roomCount,item.price);
                 this.totalCount = 0;
                 this.totalPrice = 0;
-                this.orderDetail.orderRoomList = [];
+                this.orderDetail.orderRoomTypeList = [];
                 for(var i=0; i<this.hotelDetailInfo.roomTypeForSaleList.length; i++){
                     var roomTypeItem =  this.hotelDetailInfo.roomTypeForSaleList[i]
-                    this.totalCount += roomTypeItem.orderRooms;
-                    this.totalPrice += roomTypeItem.sumPrice,this.dateDiff;
-                    if(roomTypeItem.orderRooms>0){
-                        this.orderDetail.orderRoomList.push(roomTypeItem);
+                    this.totalCount += roomTypeItem.roomCount;
+                    this.totalPrice += roomTypeItem.totalPrice;
+                    if(roomTypeItem.roomCount>0){
+                        this.orderDetail.orderRoomTypeList.push(roomTypeItem);
                     }
                 }
-                this.orderDetail.totalCount = this.totalCount;
-                this.orderDetail.totalPrice = this.totalPrice;
+                this.orderDetail.roomTotalCount = this.totalCount;
+                this.orderDetail.orderAmount = this.totalPrice;
                 setStore('ORDER_INFO',this.orderDetail);
             },
             moreDetail(item){

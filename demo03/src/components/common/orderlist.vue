@@ -46,7 +46,7 @@
               <span class="fr">订单总费用：¥{{item.orderAmount}}</span>
             </div>
             <div class="btn-layout bdtl clearfix">
-              <router-link :to="{path: 'ordertabdetail', query:{orderId: item.orderId}}">
+              <router-link :to="{path: 'orderdetail', query:{orderId: item.orderId}}">
                 <button class="fr" v-if="item.orderStatus == 0">去支付</button>
               </router-link>
               <button class="fr" v-if="item.orderStatus == 4" @click="queryOrder(item.orderId)">重新下单</button>
@@ -136,11 +136,13 @@
                 })
             },
             routerToPaySuccess(item){
-                if(item.orderStatus == 0){
+
+                this.$router.push({ path: 'orderdetail', query: { orderId: item.orderId }})
+                /*if(item.orderStatus == 0){
                     this.$router.push({ path: 'ordertabdetail', query: { orderId: item.orderId }})
                 }else{
                     this.$router.push({ path: 'ordersuccessdetail', query: { orderId: item.orderId }})
-                }
+                }*/
             },
             loadMore(elem) {
                 this.getOrderList(elem);
@@ -198,7 +200,7 @@
                         orderId:orderid
                     },
                     success:(data)=>{
-                        this.$router.push({ path: 'ordertabdetail', query: { orderId: orderid }})
+                        this.$router.push({ path: 'orderdetail', query: { orderId: orderid }})
                     }
                 });
             }
