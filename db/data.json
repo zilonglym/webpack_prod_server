@@ -1,0 +1,624 @@
+选择酒店
+GET https://wx.inzlink.com/web/w_roomtypedetail?roomTypeId=18&groupId=2&hotelId=2&r=1&timeStamp=1527750589551
+跳转到首页的那个index
+
+酒店展示
+POST https://wx.inzlink.com/yzlpms/api/hotel/j/detailInfo
+{"hotelId":"2","checkinDate":"2018-12-03","checkoutDate":"2018-12-04"}
+
+{
+	"code": "0000",
+	"data": {
+		"address": "福田街道2001号",
+		"checkinTime": "12:00",
+		"checkoutTime": "12:00",
+		"commentCount": 6,
+		"decorateDate": "2016年9月",
+		"fax": "0755-82651241",
+		"feature": "酒店位于深圳市福田区福田街道2001号，酒店客房配有冷暖空调,紧邻地铁1号罗宝线车公庙B出口，地铁直达会展中心、世界之窗、欢乐谷、锦绣中华等。\n　　这里到皇岗口岸、福田口岸、欢乐海岸也很方便，附近有休闲胜地“红树林”、深圳湾公园、美食街——香蜜湖度假村；毗邻丰盛町步行商业街、KTV、东海城市广场、太平洋电影院、沃尔玛购物中心等。\n　　酒店以“绿色环保低碳”的生活理念为主旋律，更加专注于环保节能、安全舒适的绿色酒店发展。\n　　酒店风格时尚、简约、端庄，以后现代文化为主题，特色的概念客房、欧式风情的西餐厅融合古典中式厅房，诠释了都市人对时尚、精致生活的追求。\n　　现代感十足的商务设施、贴心设计的健身房和自助洗衣，让你的商旅尽享舒适。",
+		"groupId": "2",
+		"hotelId": "2",
+		"hotelName": "KK精品酒店",
+		"hotelNumber": 2,
+		"imgUrlList": ["http://www.inzlink.com/pms_img/20171204/1512356782115937518411104124928_400x750.jpg", "http://www.inzlink.com/pms_img/20171204/1512356787322937518432948060160_400x750.jpg"],
+		"latitude": "22.5556210000",
+		"longitude": "114.0532210000",
+		"openDate": "2006年03月",
+		"roomTotal": "99",
+		"roomTypeForSaleList": [{
+			"address": null,
+			"bedType": "1.8*1",
+			"count": 5,
+			"dayPrice": null,
+			"detail": null,
+			"floor": "3",
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": "单房",
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20171204/1512357226418937520274650169344_420x710.jpg", "http://www.inzlink.com/pms_img/20180705/15307793232001014788148871299072_420x710.png", "http://www.inzlink.com/pms_img/20180705/15307793258171014788159847792640_420x710.png", "http://www.inzlink.com/pms_img/20180705/15307793280481014788169205284864_420x710.png", "http://www.inzlink.com/pms_img/20180705/15307793301511014788178025906176_420x710.png"],
+			"isDirectReserveRoom": null,
+			"landscaped": "湖景",
+			"price": 800.00,
+			"roomArea": "80㎡",
+			"roomList": null,
+			"roomTypeId": "18",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20171204/1512357226418937520274650169344_420x710.jpg",
+			"roomTypeName": "海景大床房",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 800.00
+			}],
+			"telephoneNo": null,
+			"wifiSupport": ""
+		}, {
+			"address": null,
+			"bedType": "1.8M",
+			"count": 9,
+			"dayPrice": null,
+			"detail": null,
+			"floor": "26",
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": "单房",
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20171204/1512357323012937520679794769920_420x710.jpg"],
+			"isDirectReserveRoom": null,
+			"landscaped": "湖景",
+			"price": 0.01,
+			"roomArea": "82",
+			"roomList": null,
+			"roomTypeId": "19",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20171204/1512357323012937520679794769920_420x710.jpg",
+			"roomTypeName": "商务大床房-不可预订",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 0.01
+			}],
+			"telephoneNo": null,
+			"wifiSupport": "有"
+		}, {
+			"address": null,
+			"bedType": "1.8M",
+			"count": 4,
+			"dayPrice": null,
+			"detail": null,
+			"floor": "25",
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": "两房一厅",
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20171204/1512357483858937521354431791104_420x710.jpg"],
+			"isDirectReserveRoom": null,
+			"landscaped": "海景",
+			"price": 0.01,
+			"roomArea": "60㎡",
+			"roomList": null,
+			"roomTypeId": "58",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20171204/1512357483858937521354431791104_420x710.jpg",
+			"roomTypeName": "会议中心-不可预订",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 0.01
+			}],
+			"telephoneNo": null,
+			"wifiSupport": "有"
+		}, {
+			"address": null,
+			"bedType": "1.8M*2",
+			"count": 2,
+			"dayPrice": null,
+			"detail": null,
+			"floor": "23",
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": "两房一厅",
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20171204/1512357790892937522642225725440_420x710.jpg"],
+			"isDirectReserveRoom": null,
+			"landscaped": "山景",
+			"price": 400.00,
+			"roomArea": "89",
+			"roomList": null,
+			"roomTypeId": "84",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20171204/1512357790892937522642225725440_420x710.jpg",
+			"roomTypeName": "海景双卧房",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 400.00
+			}],
+			"telephoneNo": null,
+			"wifiSupport": "有"
+		}, {
+			"address": null,
+			"bedType": "1.8M*2+1.5M*1",
+			"count": 8,
+			"dayPrice": null,
+			"detail": null,
+			"floor": "23",
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": "三房两厅",
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20171204/1512357553007937521644463718400_420x710.jpg"],
+			"isDirectReserveRoom": null,
+			"landscaped": "山景",
+			"price": 0.01,
+			"roomArea": "150",
+			"roomList": null,
+			"roomTypeId": "230",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20171204/1512357553007937521644463718400_420x710.jpg",
+			"roomTypeName": "山景房-不可预订",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 0.01
+			}],
+			"telephoneNo": null,
+			"wifiSupport": "有"
+		}, {
+			"address": null,
+			"bedType": "1.8M*5",
+			"count": 5,
+			"dayPrice": null,
+			"detail": null,
+			"floor": "20",
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": "洋房",
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20171204/1512357646747937522037637775360_420x710.jpg"],
+			"isDirectReserveRoom": null,
+			"landscaped": "别墅",
+			"price": 0.01,
+			"roomArea": "200",
+			"roomList": null,
+			"roomTypeId": "236",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20171204/1512357646747937522037637775360_420x710.jpg",
+			"roomTypeName": "海景房-不可预订",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 0.01
+			}],
+			"telephoneNo": null,
+			"wifiSupport": "有"
+		}, {
+			"address": null,
+			"bedType": "1.8M*4",
+			"count": 2,
+			"dayPrice": null,
+			"detail": null,
+			"floor": "23",
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": "别墅",
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20171204/1512357696566937522246593806336_420x710.jpg"],
+			"isDirectReserveRoom": null,
+			"landscaped": "山景",
+			"price": 0.01,
+			"roomArea": "300",
+			"roomList": null,
+			"roomTypeId": "330",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20171204/1512357696566937522246593806336_420x710.jpg",
+			"roomTypeName": "日出随心-不可预订",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 0.01
+			}],
+			"telephoneNo": null,
+			"wifiSupport": "有"
+		}, {
+			"address": null,
+			"bedType": null,
+			"count": 0,
+			"dayPrice": null,
+			"detail": null,
+			"floor": null,
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": null,
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20180316/1521191122866974572321857601536_420x710.jpg"],
+			"isDirectReserveRoom": null,
+			"landscaped": null,
+			"price": 9001.00,
+			"roomArea": null,
+			"roomList": null,
+			"roomTypeId": "362",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20180316/1521191122866974572321857601536_420x710.jpg",
+			"roomTypeName": "海景两房一厅麻将房",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 9001.00
+			}],
+			"telephoneNo": null,
+			"wifiSupport": null
+		}, {
+			"address": null,
+			"bedType": null,
+			"count": 4,
+			"dayPrice": null,
+			"detail": null,
+			"floor": null,
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": null,
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20180316/1521191168628974572513797341184_420x710.jpg"],
+			"isDirectReserveRoom": null,
+			"landscaped": null,
+			"price": 8888.00,
+			"roomArea": null,
+			"roomList": null,
+			"roomTypeId": "363",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20180316/1521191168628974572513797341184_420x710.jpg",
+			"roomTypeName": "海景双床房",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 8888.00
+			}],
+			"telephoneNo": null,
+			"wifiSupport": null
+		}, {
+			"address": null,
+			"bedType": null,
+			"count": 0,
+			"dayPrice": null,
+			"detail": null,
+			"floor": null,
+			"hotelId": "2",
+			"hotelName": null,
+			"houseType": null,
+			"imgUrlList": ["http://www.inzlink.com/pms_img/20180423/1524468610833988319102747541504_420x710.jpg"],
+			"isDirectReserveRoom": null,
+			"landscaped": null,
+			"price": 200.00,
+			"roomArea": null,
+			"roomList": null,
+			"roomTypeId": "390",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20180423/1524468610833988319102747541504_420x710.jpg",
+			"roomTypeName": "大床房",
+			"stayDatePriceList": [{
+				"day": "2018-12-03",
+				"price": 200.00
+			}],
+			"telephoneNo": null,
+			"wifiSupport": null
+		}],
+		"rule": "1.不接受18岁以下客人单独入住。\n2.不可携带宠物。",
+		"serviceList": [{
+			"code": "1",
+			"isCheck": true,
+			"isFlag": false,
+			"name": "停车场"
+		}, {
+			"code": "2",
+			"isCheck": true,
+			"isFlag": false,
+			"name": "免费WiFi"
+		}, {
+			"code": "3",
+			"isCheck": true,
+			"isFlag": false,
+			"name": "早餐"
+		}, {
+			"code": "4",
+			"isCheck": true,
+			"isFlag": false,
+			"name": "提供发票"
+		}, {
+			"code": "5",
+			"isCheck": false,
+			"isFlag": false,
+			"name": "接送服务"
+		}],
+		"telephoneNo": "0755-82165451",
+		"vote": "4.7",
+		"website": "http://www.inzlink.com"
+	},
+	"msg": "处理成功",
+	"ves": "1.4"
+}
+
+选择酒店后展示酒店可预定房型
+POST https://wx.inzlink.com/yzlpms/api/hotel/j/roomTypeForSale
+{"roomTypeId":"18","checkinDate":"2018-12-03","checkoutDate":"2018-12-04"}
+{
+	"code": "0000",
+	"data": {
+		"address": "福田街道2001号",
+		"bedType": "1.8*1",
+		"count": 5,
+		"dayPrice": null,
+		"detail": null,
+		"floor": "3",
+		"hotelId": "2",
+		"hotelName": "KK精品酒店",
+		"houseType": "单房",
+		"imgUrlList": ["http://www.inzlink.com/pms_img/20171204/1512357226418937520274650169344_420x710.jpg", "http://www.inzlink.com/pms_img/20180705/15307793232001014788148871299072_420x710.png", "http://www.inzlink.com/pms_img/20180705/15307793258171014788159847792640_420x710.png", "http://www.inzlink.com/pms_img/20180705/15307793280481014788169205284864_420x710.png", "http://www.inzlink.com/pms_img/20180705/15307793301511014788178025906176_420x710.png"],
+		"isDirectReserveRoom": "1",
+		"landscaped": "湖景",
+		"price": 800.00,
+		"roomArea": "80㎡",
+		"roomList": [{
+			"roomId": "1261",
+			"roomNo": "ch123C"
+		}, {
+			"roomId": "2551",
+			"roomNo": "1202C"
+		}, {
+			"roomId": "2552",
+			"roomNo": "1203C"
+		}, {
+			"roomId": "2553",
+			"roomNo": "1204C"
+		}, {
+			"roomId": "1832",
+			"roomNo": "1602C"
+		}],
+		"roomTypeId": "18",
+		"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20171204/1512357226418937520274650169344_420x710.jpg",
+		"roomTypeName": "海景大床房",
+		"stayDatePriceList": [{
+			"day": "2018-12-03",
+			"price": 800.00
+		}],
+		"telephoneNo": "0755-82165451",
+		"wifiSupport": ""
+	},
+	"msg": "处理成功",
+	"ves": "1.4"
+}
+
+
+注册界面，前端
+
+发送验证码
+GET https://wx.inzlink.com/yzlpms/webapp/api/j/getCode/15989505624
+{"code":"0000","data":{"smsId":"295697"},"msg":"发送验证码成功！","ves":"1.4"}
+
+手机登录获得sessionId
+GET https://wx.inzlink.com/yzlpms/webapp/api/j/mobileLogin/15989505624/3888
+{"code":"0000","data":{"sessionId":"1069574959031910400"},"msg":"处理成功","ves":"1.4"}
+
+前端接收(获取cookie sessionId)
+GET https://wx.inzlink.com/yzlpms/webapp/api/j/getHotelKeyCodeList
+Cookie: groupId=2; hotelId=2
+X-WX-SESSIONID: 1069574959031910400
+
+账户信息（我））
+POST https://wx.inzlink.com/yzlpms/webapp/user/j/getUserInfo
+Cookie: groupId=2; hotelId=2
+{}
+{
+	"code": "0000",
+	"data": {
+		"areaId": null,
+		"areaName": null,
+		"auditStatus": null,
+		"headImgUrl": null,
+		"idNumber": null,
+		"mobile": "15989505624",
+		"nickName": null,
+		"openId": null,
+		"sessionId": "1069574959031910400",
+		"sex": null,
+		"uid": null,
+		"userAccount": null,
+		"userId": "12289",
+		"userName": "15989505624",
+		"wxUserId": null
+	},
+	"msg": "处理成功",
+	"ves": "1.4"
+}
+
+订单查询数量统计-默认查询所有
+POST https://wx.inzlink.com/yzlpms/webapp/user/j/order/num
+{}
+
+{
+	"code": "0000",
+	"data": {
+		"couponNum": "0",
+		"point": "100",
+		"waitCheckinNum": "0",
+		"waitCommentNum": "0",
+		"waitPayNum": "0"
+	},
+	"msg": "处理成功",
+	"ves": "1.4"
+}
+
+
+订单页面显示
+POST https://wx.inzlink.com/yzlpms/webapp/user/j/order/page 
+{"orderStatus":"","pageNum":1,"pageSize":"10"}
+
+{"orderStatus":"0","pageNum":1,"pageSize":"10"}
+{
+	"code": "0000",
+	"data": {
+		"endRow": 1,
+		"firstPage": 1,
+		"hasNextPage": false,
+		"hasPreviousPage": false,
+		"isFirstPage": true,
+		"isLastPage": true,
+		"lastPage": 1,
+		"list": [{
+			"canComment": "0",
+			"canPayStatus": "1",
+			"checkinDate": "2018-12-05",
+			"checkoutDate": "2018-12-07",
+			"createTime": "2018-12-03 20:32:15",
+			"discountAmount": null,
+			"hotelId": "2",
+			"hotelName": "KK精品酒店",
+			"orderAmount": 1600.00,
+			"orderId": "136173",
+			"orderNo": "18120300113",
+			"orderPayAmount": 1600.00,
+			"orderStatus": "4",
+			"roomList": [{
+				"address": "福田街道2001号",
+				"addressDetail": "福田街道2001号",
+				"imgUrl": "http://www.inzlink.com/pms_img/20171204/1512357226418937520274650169344_420x710.jpg",
+				"latitude": "22.549886",
+				"longitude": "114.046679",
+				"orderRoomStayId": "1069570003654672384",
+				"roomNo": "ch123C",
+				"roomTypeName": "海景大床房",
+				"totalPrice": 1600.00
+			}],
+			"userCouponId": null
+		}],
+		"navigatePages": 8,
+		"navigatepageNums": [1],
+		"nextPage": 0,
+		"orderBy": null,
+		"pageNum": 1,
+		"pageSize": 10,
+		"pages": 1,
+		"prePage": 0,
+		"size": 1,
+		"startRow": 1,
+		"total": 1
+	},
+	"msg": "处理成功",
+	"ves": "1.4"
+}
+{"orderStatus":"1","pageNum":1,"pageSize":"10"}
+{
+	"code": "0000",
+	"data": {
+		"endRow": 0,
+		"firstPage": 0,
+		"hasNextPage": false,
+		"hasPreviousPage": false,
+		"isFirstPage": true,
+		"isLastPage": false,
+		"lastPage": 0,
+		"list": [],
+		"navigatePages": 8,
+		"navigatepageNums": [],
+		"nextPage": 0,
+		"orderBy": null,
+		"pageNum": 1,
+		"pageSize": 10,
+		"pages": 0,
+		"prePage": 0,
+		"size": 0,
+		"startRow": 0,
+		"total": 0
+	},
+	"msg": "处理成功",
+	"ves": "1.4"
+}
+{"orderStatus":"3","pageNum":1,"pageSize":"10"}
+{
+	"code": "0000",
+	"data": {
+		"endRow": 0,
+		"firstPage": 0,
+		"hasNextPage": false,
+		"hasPreviousPage": false,
+		"isFirstPage": true,
+		"isLastPage": false,
+		"lastPage": 0,
+		"list": [],
+		"navigatePages": 8,
+		"navigatepageNums": [],
+		"nextPage": 0,
+		"orderBy": null,
+		"pageNum": 1,
+		"pageSize": 10,
+		"pages": 0,
+		"prePage": 0,
+		"size": 0,
+		"startRow": 0,
+		"total": 0
+	},
+	"msg": "处理成功",
+	"ves": "1.4"
+}
+
+订单增加
+POST https://wx.inzlink.com/yzlpms/webapp/order/j/add
+{
+	"hotelId": "2",
+	"checkinDate": "2018-12-05",
+	"checkoutDate": "2018-12-06",
+	"orderRoomList": [{
+		"roomTypeId": "19",
+		"roomTypeName": "商务大床房-不可预订",
+		"roomCount": 1,
+		"roomList": [{
+			"roomId": "163"
+		}]
+	}],
+	"promoCode": ""
+}
+
+{
+	"code": "0000",
+	"data": {
+		"orderAmount": 0.01,
+		"orderPayAmount": 0.01,
+		"orderId": "136176"
+	},
+	"msg": "处理成功",
+	"ves": "1.4"
+}
+
+
+订单详情
+POST https://wx.inzlink.com/yzlpms/webapp/order/j/detail
+
+{"orderId":"136176"}
+
+{
+	"code": "0000",
+	"data": {
+		"address": "福田街道2001号",
+		"canComment": null,
+		"canPayStatus": "1",
+		"checkinDate": "2018-12-05",
+		"checkoutDate": "2018-12-06",
+		"createTime": "2018-12-03 20:53:37",
+		"discountAmount": null,
+		"hotelId": "2",
+		"hotelName": "KK精品酒店",
+		"latitude": "22.5556210000",
+		"longitude": "114.0532210000",
+		"orderAmount": 0.01,
+		"orderId": "136176",
+		"orderNo": "18120300116",
+		"orderPayAmount": 0.01,
+		"orderRoomTypeList": [{
+			"roomCount": 1,
+			"roomList": [{
+				"orderRoomStayId": null,
+				"roomGuideDto": null,
+				"roomId": "163",
+				"roomNo": "商102",
+				"totalPrice": 0.01,
+				"userKeyEntity": null
+			}],
+			"roomTypeId": "19",
+			"roomTypeImgUrl": "http://www.inzlink.com/pms_img/20171204/1512357323012937520679794769920_420x710.jpg",
+			"roomTypeName": "商务大床房-不可预订",
+			"stayDatePriceList": [{
+				"day": "2018-12-05",
+				"price": 0.01
+			}],
+			"totalPrice": 0.01
+		}],
+		"orderStatus": "0",
+		"roomTotalCount": 1,
+		"telephoneNo": "0755-82165451",
+		"userCouponId": null
+	},
+	"msg": "处理成功",
+	"ves": "1.4"
+}
+
+
+订单删除
+POST https://wx.inzlink.com/yzlpms/webapp/order/j/delete 
+{"orderId":"136173"}
+{"code":"0000","data":null,"msg":"删除成功","ves":"1.4"}
+
+
+
